@@ -9,17 +9,22 @@ Instructions
 $ git clone https://github.com/JuanjoAlegria/protein_analysis.git
 ```
 
-2. Create the environment:
+2. Change directory:
+```
+$ cd protein_analysis
+```
+
+3. Create the environment:
 ```
 $ conda env create -f environment.yml
 ```
 
-3. Activate the environment
+4. Activate the environment
 ```
 $ conda activate protein_analysis
 ```
 
-4. Execute the script
+5. Execute the script
 
 ```
 $ python -m src.protein_analysis --df_features_path path/to/features.csv --save_dir path/to/folder
