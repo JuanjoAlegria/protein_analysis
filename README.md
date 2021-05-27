@@ -11,7 +11,7 @@ $ git clone https://github.com/JuanjoAlegria/protein_analysis.git
 
 2. Create the environment:
 ```
-$ conda create --name protein_analysis --file env-explicit.txt
+$ conda env create -f environment.yml
 ```
 
 3. Activate the environment
