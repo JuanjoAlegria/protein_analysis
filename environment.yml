@@ -1,0 +1,11 @@
+name: protein_analysis
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - numpy=1.18
+  - scikit-learn=0.23
+  - python=3.8.6
+  - matplotlib=3.2
+  - pandas=1.0
+prefix: /media/data/miniconda3/envs/protein_analysis
