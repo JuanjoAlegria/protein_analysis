@@ -1,10 +1,13 @@
 # protein_analysis
+
 Protein analysis project.
 
-Instructions
+Instructions (for Windows mainly)
 ------------
 
-1. Clone repository:
+0. Install Git Bash and conda. Follow the instructions at [this link.](https://www.earthdatascience.org/workshops/setup-earth-analytics-python/setup-git-bash-conda/)
+
+2. Clone repository:
 ```
 $ git clone https://github.com/JuanjoAlegria/protein_analysis.git
 ```
@@ -20,9 +23,12 @@ $ conda env create -f environment.yml
 ```
 
 4. Activate the environment
+   - If it is the first time you activate a conda environment, run `$ conda init bash` and then close and start again the console. If it's not the first time, skip this step.
+
 ```
 $ conda activate protein_analysis
 ```
+
 
 5. Execute the script
 
