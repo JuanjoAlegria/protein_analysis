@@ -6,6 +6,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from pathlib import Path
 from datetime import datetime
+from sklearn.metrics import classification_report
 
 
 def plot_projections(
@@ -135,20 +136,20 @@ def main(
         df = df.loc[proteins]
 
     margin = 1 / np.sqrt(np.sum(svm.coef_ ** 2))
-    print("SVM Margin", margin)
-    a, b = svm.coef_[0]
-    c = svm.intercept_[0]
-    print(f"SVM coefficients (ax + by + c = 0): a = {a}, b = {b}, c = {c}")
+    (a, b), c = svm.coef_[0], svm.intercept_[0]
+    print("################### SVM Info ###########################")
+    print("Margin width", 2 * margin)
+    print(f"Coefficients (ax + by + c = 0): a = {a}, b = {b}, c = {c}")
+
     X = df[columns]
     y = df["stimulus"]
     df_distances = compute_distances(df, svm, x_col, y_col)
+
     df_distances["is_inside_margin"] = df_distances["distance_classifier"] <= margin
     df_distances["distance_classifier_signed"] = df_distances["distance_classifier"]
-    df_distances.loc[
-        df_distances["predictions"] == "NS", "distance_classifier_signed"
-    ] = (
-        -1
-        * df_distances.loc[df_distances["predictions"] == "NS", "distance_classifier"]
+    ns_index = df_distances["predictions"] == "NS"
+    df_distances.loc[ns_index, "distance_classifier_signed"] = (
+        -1 * df_distances.loc[ns_index, "distance_classifier"]
     )
 
     df_distances = df_distances[
@@ -163,7 +164,20 @@ def main(
             "is_inside_margin",
         ]
     ]
+    print("################### Data ###########################")
     print(df_distances)
+
+    y_real = df_distances["stimulus"]
+    y_pred = df_distances["predictions"]
+    y_real_out = y_real[~df_distances["is_inside_margin"]]
+    y_pred_out = y_pred[~df_distances["is_inside_margin"]]
+
+    print("################### Metrics ###########################")
+    print("### All data")
+    print(classification_report(y_real, y_pred))
+    print("### Outside margin")
+    print(classification_report(y_real_out, y_pred_out))
+
     fig, ax = plot_projections(
         X,
         y,
