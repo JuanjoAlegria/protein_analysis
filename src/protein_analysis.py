@@ -140,7 +140,6 @@ def main(
     print("################### SVM Info ###########################")
     print("Margin width", 2 * margin)
     print(f"Coefficients (ax + by + c = 0): a = {a}, b = {b}, c = {c}")
-
     X = df[columns]
     y = df["stimulus"]
     df_distances = compute_distances(df, svm, x_col, y_col)
@@ -175,8 +174,12 @@ def main(
     print("################### Metrics ###########################")
     print("### All data")
     print(classification_report(y_real, y_pred))
-    print("### Outside margin")
-    print(classification_report(y_real_out, y_pred_out))
+
+    if len(y_real_out) == 0:
+        print("### No samples outside the margin")
+    else:
+        print("### Outside margin")
+        print(classification_report(y_real_out, y_pred_out))
 
     fig, ax = plot_projections(
         X,
